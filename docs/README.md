@@ -46,7 +46,7 @@ Based on the prevalent topics discovered from the customer reviews, we provide a
 1. Clone this repository:
    ```sh
    git clone https://github.com/collinsmayweather/capstone-project.git
-   cd amazon-reviews-topic-modeling
+   cd capstone-project
 
     ```
 2. Install the necessary packages:
