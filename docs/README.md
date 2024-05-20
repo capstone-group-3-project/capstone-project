@@ -1,123 +1,83 @@
-{
- "cells": [
-  {
-   "cell_type": "markdown",
-   "id": "feca88bd-063b-460c-b96c-4bada16547b6",
-   "metadata": {},
-   "source": [
-    "# Amazon US Customer Reviews Topic Modeling\n",
-    "\n",
-    "## Overview\n",
-    "This project aims to analyze Amazon US customer reviews to discover prevalent topics using Natural Language Processing (NLP) techniques, specifically Latent Dirichlet Allocation (LDA). The findings will help inform product adjustments and marketing strategies based on customer feedback.\n",
-    "\n",
-    "## Table of Contents\n",
-    "- [Introduction](##introduction)\n",
-    "- [Data Sources](#data-sources)\n",
-    "- [Methodology](#methodology)\n",
-    "- [Results](#results)\n",
-    "- [Conclusions](#conclusions)\n",
-    "- [How to Run the Code](#how-to-run-the-code)\n",
-    "- [Installation](#installation)\n",
-    "- [Usage](#usage)\n",
-    "- [Contributing](#contributing)\n",
-    "- [License](#license)\n",
-    "- [Authors](#authors)\n",
-    "- [Acknowledgments](#acknowledgments)\n",
-    "\n",
-    "## Introduction\n",
-    "This project utilizes the Amazon US Customer Reviews Dataset to perform topic modeling, aiming to uncover common themes in customer feedback. The analysis employs LDA for topic extraction and visualization techniques like word clouds and bar charts to represent the results.\n",
-    "\n",
-    "## Data Sources\n",
-    "The dataset is obtained from [Kaggle](https://www.kaggle.com/) and contains US customer reviews for Amazon products.\n",
-    "\n",
-    "## Methodology\n",
-    "1. **Data Preprocessing:** Clean the dataset by removing irrelevant data and ensuring consistency in textual data.\n",
-    "2. **Topic Modeling:** Apply LDA to extract common topics from the reviews.\n",
-    "3. **Visualization:** Use word clouds and bar charts to represent the most common topics and their frequency.\n",
-    "4. **Reporting:** Outline the methods used, topics discovered, and their influence on product adjustments or marketing strategies.\n",
-    "5. **Presentation:** Create a presentation explaining the findings and recommending actions based on prevalent topics in customer feedback.\n",
-    "\n",
-    "## Results\n",
-    "The results section will contain visual representations of the discovered topics and their frequencies, along with an analysis of these findings.\n",
-    "\n",
-    "## Conclusions\n",
-    "Based on the prevalent topics discovered from the customer reviews, we provide actionable insights and recommendations for product improvements and marketing strategies.\n",
-    "\n",
-    "## How to Run the Code\n",
-    "1. Clone the repository.\n",
-    "2. Install the required dependencies.\n",
-    "3. Run the `select_file()` function to load and process the dataset.\n",
-    "4. View the generated visualizations and analyze the extracted topics.\n",
-    "\n",
-    "## Installation\n",
-    "1. Clone this repository:\n",
-    "    ```bash\n",
-    "    git clone https://github.com/collinsmayweather/amazon-reviews-topic-modeling.git\n",
-    "    cd amazon-reviews-topic-modeling\n",
-    "    ```\n",
-    "2. Install the necessary packages:\n",
-    "    ```bash\n",
-    "    pip install -r requirements.txt\n",
-    "    ```\n",
-    "\n",
-    "## Usage\n",
-    "1. Run the script:\n",
-    "    ```bash\n",
-    "    python topic_modeling.py\n",
-    "    ```\n",
-    "2. Select the dataset file when prompted.\n",
-    "3. The script will preprocess the data, perform topic modeling, and display visualizations of the discovered topics.\n",
-    "\n",
-    "## Contributing\n",
-    "We welcome contributions to this project. Please follow these steps:\n",
-    "1. Fork the repository.\n",
-    "2. Create a new branch (`git checkout -b feature-branch`).\n",
-    "3. Make your changes and commit them (`git commit -am 'Add new feature'`).\n",
-    "4. Push to the branch (`git push origin feature-branch`).\n",
-    "5. Create a new Pull Request.\n",
-    "\n",
-    "## License\n",
-    "This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.\n",
-    "\n",
-    "## Authors\n",
-    "- Scolastica Nzyoki\n",
-    "- Mercy Njambi\n",
-    "- Brenda Murage\n",
-    "- Purity Njau\n",
-    "- Collins Too\n",
-    "\n",
-    "## Acknowledgments\n",
-    "We thank Kaggle for providing the dataset and the open-source community for the tools and libraries used in this project.\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "192a56a1-9173-49ba-b35a-53127eb2a917",
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.12.3"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
-}
+# Amazon US Customer Reviews Topic Modeling
+
+## Overview
+This project aims to analyze Amazon US customer reviews to discover prevalent topics using Natural Language Processing (NLP) techniques, specifically Latent Dirichlet Allocation (LDA). The findings will help inform product adjustments and marketing strategies based on customer feedback.
+
+## Table of Contents
+- [Introduction](##introduction)
+- [Data Sources](#data-sources)
+- [Methodology](#methodology)
+- [Results](#results)
+- [Conclusions](#conclusions)
+- [How to Run the Code](#how-to-run-the-code)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Authors](#authors)
+- [Acknowledgments](#acknowledgments)
+
+## Introduction
+This project utilizes the Amazon US Customer Reviews Dataset to perform topic modeling, aiming to uncover common themes in customer feedback. The analysis employs LDA for topic extraction and visualization techniques like word clouds and bar charts to represent the results.
+
+## Data Sources
+The dataset is obtained from [Kaggle](https://www.kaggle.com/) and contains US customer reviews for Amazon products.
+
+## Methodology
+1. **Data Preprocessing:** Clean the dataset by removing irrelevant data and ensuring consistency in textual data.
+2. **Topic Modeling:** Apply LDA to extract common topics from the reviews.
+3. **Visualization:** Use word clouds and bar charts to represent the most common topics and their frequency.
+4. **Reporting:** Outline the methods used, topics discovered, and their influence on product adjustments or marketing strategies.
+5. **Presentation:** Create a presentation explaining the findings and recommending actions based on prevalent topics in customer feedback.
+
+## Results
+The results section will contain visual representations of the discovered topics and their frequencies, along with an analysis of these findings.
+
+## Conclusions
+Based on the prevalent topics discovered from the customer reviews, we provide actionable insights and recommendations for product improvements and marketing strategies.
+
+## How to Run the Code
+1. Clone the repository.
+2. Install the required dependencies.
+3. Run the `select_file()` function to load and process the dataset.
+4. View the generated visualizations and analyze the extracted topics.
+
+## Installation
+1. Clone this repository:
+    ```bash
+    git clone https://github.com/collinsmayweather/amazon-reviews-topic-modeling.git
+    cd amazon-reviews-topic-modeling
+    ```
+2. Install the necessary packages:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## Usage
+1. Run the script:
+    ```bash
+    python topic_modeling.py
+    ```
+2. Select the dataset file when prompted.
+3. The script will preprocess the data, perform topic modeling, and display visualizations of the discovered topics.
+
+## Contributing
+We welcome contributions to this project. Please follow these steps:
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes and commit them (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Create a new Pull Request.
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Authors
+- Scolastica Nzyoki
+- Mercy Njambi
+- Brenda Murage
+- Purity Njau
+- Collins Too
+
+## Acknowledgments
+We thank Kaggle for providing the dataset and the open-source community for the tools and libraries used in this project.
