@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Topic Modeling Results{% endblock %}
+{% block header %}Topic Modeling Results{% endblock %}
+
+{% block content %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Statistics for {{ filename }}</title>
+</head>
+<body>
+    <h1>Statistics for {{ filename }}</h1>
+    <ul>
+        <li>Total Reviews: {{ statistics.total_reviews }}</li>
+        <li>Average Rating: {{ statistics.average_rating }}</li>
+        <li>Rating Distribution: {{ statistics.rating_distribution }}</li>
+    </ul>
+    <br>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>
+{% endblock %}
