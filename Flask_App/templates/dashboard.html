@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block header %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Summary Statistics Card -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Summary Statistics
+                </div>
+                <div class="card-body">
+                    <p>Total Files: {{ total_files }}</p>
+                    <p>Average Sentiment Score: {{ average_sentiment_score }}</p>
+                    <p>Total Topics Generated: {{ total_topics }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity Card -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Recent Activity
+                    <button class="btn btn-danger btn-sm float-end" onclick="clearRecentActivity()">Clear</button>
+                </div>
+                <div class="card-body" id="recent-activities">
+                    <ul id="recent-activities-list">
+                        {% for activity in recent_activities %}
+                            <li>{{ activity.action }} - {{ activity.filename }} - {{ activity.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visualizations Card -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Visualizations
+                </div>
+                <div class="card-body">
+                    <canvas id="sentimentChart" width="400" height="200"></canvas>
+                    <canvas id="topicChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Analyzed Reviews Card -->
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Analyzed Reviews
+                </div>
+                <div class="card-body">
+                    <ul id="file-list" class="list-group">
+                        {% if analyzed_files %}
+                            {% for file in analyzed_files %}
+                                <li class="list-group-item file-item">
+                                    <div class="file-header" onclick="toggleDetails('{{ file.filename }}')">
+                                        <span class="file-name">{{ file.filename }}</span>
+                                        <button class="btn btn-details">Details</button>
+                                    </div>
+                                    <div id="details-{{ file.filename }}" class="file-details mt-2">
+                                        <h5>Topics:</h5>
+                                        <ul>
+                                            {% for topic in file.topics %}
+                                                <li><strong>Topic {{ topic.id }}:</strong> {{ topic.terms | join(', ') }} <em>({{ topic.interpretation }})</em></li>
+                                            {% endfor %}
+                                        </ul>
+                                        <p>
+                                            <a href="{{ url_for('topics', filename=file.filename) }}">Topics</a> |
+                                            <a href="{{ url_for('statistics', filename=file.filename) }}">Statistics</a> |
+                                            <a href="{{ url_for('sentiments', filename=file.filename) }}">Sentiments</a> |
+                                            <a href="{{ url_for('results', filename=file.filename) }}">Results Overview</a> |
+                                            <a href="#" onclick="deleteFile('{{ file.filename }}')">Delete</a>
+                                        </p>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <p>No files found.</p>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx1 = document.getElementById('sentimentChart').getContext('2d');
+    var sentimentChart = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['Positive', 'Neutral', 'Negative'],
+            datasets: [{
+                label: 'Sentiment Distribution',
+                data: [{{ positive_count }}, {{ neutral_count }}, {{ negative_count }}],
+                backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+            }]
+        }
+    });
+
+    var ctx2 = document.getElementById('topicChart').getContext('2d');
+    var topicChart = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            labels: {{ topic_labels|safe }},
+            datasets: [{
+                data: {{ topic_counts|safe }},
+                backgroundColor: ['#007bff', '#28a745', '#dc3545', '#ffc107', '#17a2b8']
+            }]
+        }
+    });
+
+    function toggleDetails(filename) {
+        const details = document.getElementById(`details-${filename}`);
+        if (details.style.display === "none" || details.style.display === "") {
+            details.style.display = "block";
+        } else {
+            details.style.display = "none";
+        }
+    }
+
+    function deleteFile(filename) {
+        if (confirm("Are you sure you want to delete this file?")) {
+            fetch(`/delete/${filename}`, { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert("Failed to delete file: " + data.error);
+                    }
+                });
+        }
+    }
+
+    // Function to fetch recent activities and update the list
+    function fetchRecentActivities() {
+        fetch('/recent_activities')
+            .then(response => response.json())
+            .then(data => {
+                const recentActivitiesList = document.getElementById('recent-activities-list');
+                recentActivitiesList.innerHTML = '';
+                data.forEach(activity => {
+                    const li = document.createElement('li');
+                    li.textContent = `${activity.action} - ${activity.filename} - ${new Date(activity.timestamp).toLocaleString()}`;
+                    recentActivitiesList.appendChild(li);
+                });
+            });
+    }
+
+    // Function to clear recent activities
+    function clearRecentActivity() {
+        if (confirm("Are you sure you want to clear recent activity?")) {
+            fetch('/clear_recent_activity', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        fetchRecentActivities();
+                    } else {
+                        alert("Failed to clear recent activity: " + data.error);
+                    }
+                });
+        }
+    }
+
+    // Fetch recent activities every 30 seconds
+    setInterval(fetchRecentActivities, 30000);
+</script>
+{% endblock %}

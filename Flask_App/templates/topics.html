@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Topic Modeling Results{% endblock %}
+{% block header %}Topic Modeling Results{% endblock %}
+
+{% block content %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Topics for {{ filename }}</title>
+</head>
+<body>
+    <h1>Topics for {{ filename }}</h1>
+    <ul>
+        {% for topic in topics %}
+            <li>{{ topic }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Word Clouds</h2>
+    {% for visualization in visualizations %}
+        <img src="{{ url_for('static', filename=visualization.split('static/')[1]) }}" alt="Word Cloud for Topic">
+    {% endfor %}
+    <br>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>
+{% endblock %}

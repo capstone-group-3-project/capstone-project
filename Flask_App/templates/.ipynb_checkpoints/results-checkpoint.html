@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Topic Modeling Results{% endblock %}
+{% block header %}Topic Modeling Results{% endblock %}
+
+{% block content %}
+<div class="section">
+    <h2>Results for {{ filename }}</h2>
+    <h3>Topics</h3>
+    <ul>
+        {% for topic in topics %}
+            <li>{{ topic }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Word Clouds</h3>
+    {% for visualization in visualizations %}
+        <img src="{{ url_for('static', filename=visualization.split('static/')[1]) }}" alt="Word Cloud for Topic">
+    {% endfor %}
+    <h3>Statistics</h3>
+    <p>Total Reviews: {{ statistics.total_reviews }}</p>
+    <p>Average Rating: {{ statistics.average_rating }}</p>
+    <h4>Rating Distribution</h4>
+    <ul>
+        {% for rating, count in statistics.rating_distribution.items() %}
+            <li>{{ rating }} stars: {{ count }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Sentiments</h3>
+    <p>Positive: {{ sentiments.positive }}</p>
+    <p>Neutral: {{ sentiments.neutral }}</p>
+    <p>Negative: {{ sentiments.negative }}</p>
+</div>
+{% endblock %}
