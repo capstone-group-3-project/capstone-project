@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Topic Modeling Results{% endblock %}
+{% block header %}Topic Modeling Results{% endblock %}
+
+{% block content %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Sentiments for {{ filename }}</title>
+</head>
+<body>
+    <h1>Sentiments for {{ filename }}</h1>
+    <ul>
+        <li>Positive: {{ sentiments.positive }}</li>
+        <li>Neutral: {{ sentiments.neutral }}</li>
+        <li>Negative: {{ sentiments.negative }}</li>
+    </ul>
+    <br>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>
+{% endblock %}

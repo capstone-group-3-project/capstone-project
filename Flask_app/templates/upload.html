@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Review{% endblock %}
+{% block header %}Upload Review{% endblock %}
+
+{% block content %}
+<div class="section">
+    <h2>Upload a New File</h2>
+    <form id="upload-form" method="post" action="{{ url_for('upload_file') }}" enctype="multipart/form-data">
+        <label for="file">Choose a file:</label>
+        <input type="file" id="file" name="file" required>
+        <input type="submit" value="Upload">
+    </form>
+    <div id="progress-container" style="display: none;">
+        <label for="progress">Upload Progress:</label>
+        <progress id="progress" value="0" max="100" style="width: 100%;"></progress>
+        <span id="progress-text"></span>
+    </div>
+</div>
+
+<script>
+document.getElementById('upload-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var form = event.target;
+    var formData = new FormData(form);
+    var xhr = new XMLHttpRequest();
+
+    xhr.upload.addEventListener('progress', function(event) {
+        if (event.lengthComputable) {
+            var percentComplete = (event.loaded / event.total) * 100;
+            document.getElementById('progress').value = percentComplete;
+            document.getElementById('progress-text').innerText = Math.round(percentComplete) + '%';
+        }
+    });
+
+    xhr.addEventListener('load', function(event) {
+        if (xhr.status === 200) {
+            alert('File uploaded successfully!');
+            document.getElementById('progress-container').style.display = 'none';
+            form.reset();
+        } else {
+            alert('File upload failed!');
+        }
+    });
+
+    xhr.addEventListener('error', function(event) {
+        alert('File upload failed!');
+    });
+
+    xhr.addEventListener('abort', function(event) {
+        alert('File upload canceled!');
+    });
+
+    xhr.open('POST', form.action, true);
+    document.getElementById('progress-container').style.display = 'block';
+    xhr.send(formData);
+});
+</script>
+{% endblock %}
